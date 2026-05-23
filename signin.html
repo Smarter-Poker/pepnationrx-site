@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in — Pep Nation Rx</title>
+<meta name="description" content="Sign in to your Pep Nation Rx account to manage your treatment plan, message your care team and track orders.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0E5C6E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pep Nation Rx">
+<meta property="og:title" content="Sign in — Pep Nation Rx">
+<meta property="og:description" content="Sign in to manage your treatment plan, refills and care-team messages.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="pnrx-design-system.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body class="pnrx-root">
+<a class="pnrx-skip-link" href="#site-content">Skip to content</a>
+
+<header class="site-header">
+  <div class="pnrx-container site-header__row">
+    <a class="site-logo" href="index.html" aria-label="Pep Nation Rx home">
+      <span class="site-logo__mark">P</span>Pep&nbsp;Nation&nbsp;<span class="site-logo__rx">Rx</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="browse.html">Treatments</a>
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#care">Why Pep Nation</a>
+    </nav>
+    <div class="site-header__right">
+      <a class="site-header__signin" href="signin.html" aria-current="page">Sign in</a>
+      <a class="pnrx-btn pnrx-btn--primary" href="intake.html">Start your visit</a>
+      <button class="site-burger" data-burger aria-label="Menu" aria-expanded="false">
+        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="site-main" id="site-content">
+  <div class="site-auth">
+    <aside class="site-auth__aside">
+      <div class="pnrx-eyebrow" style="color:var(--pnrx-color-secondary)">Welcome back</div>
+      <h2 style="margin-top:10px">Your care, your plan, all in one place.</h2>
+      <p>Sign in to manage your treatment, message your care team, and track every delivery.</p>
+      <div class="site-auth__points">
+        <div class="site-cred"><div class="site-cred__ck">&#10003;</div><div><b>Manage your plan</b><span>Pause, change or refill in a couple of taps.</span></div></div>
+        <div class="site-cred"><div class="site-cred__ck">&#10003;</div><div><b>Message your clinician</b><span>Ask questions between visits at no extra cost.</span></div></div>
+        <div class="site-cred"><div class="site-cred__ck">&#10003;</div><div><b>Track every order</b><span>See shipping status and upcoming refills.</span></div></div>
+      </div>
+    </aside>
+
+    <div class="site-auth__form">
+      <div class="site-auth__card">
+        <h1 class="pnrx-h2" style="font-size:27px">Sign in to your account</h1>
+        <p class="pnrx-muted" style="margin-top:6px;font-size:15px">Enter your credentials to continue.</p>
+
+        <form style="margin-top:24px" onsubmit="return false">
+          <div class="pnrx-field" style="margin-bottom:16px">
+            <label class="pnrx-label" for="auth-email">Email address</label>
+            <input class="pnrx-input" id="auth-email" type="email" autocomplete="email" placeholder="you@example.com">
+          </div>
+          <div class="pnrx-field">
+            <label class="pnrx-label" for="auth-pw">Password</label>
+            <div class="site-pwfield">
+              <input class="pnrx-input" id="auth-pw" type="password" autocomplete="current-password" placeholder="Your password" style="width:100%;padding-right:42px">
+              <button class="site-pwtoggle" type="button" data-pw-toggle="auth-pw" aria-label="Show password">
+                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 9s3-5.5 8-5.5S17 9 17 9s-3 5.5-8 5.5S1 9 1 9z"/><circle cx="9" cy="9" r="2.4"/></svg>
+              </button>
+            </div>
+            <a href="signin.html" style="font-size:12.5px;font-family:var(--pnrx-font-heading);font-weight:600;margin-top:6px;align-self:flex-end">Forgot password?</a>
+          </div>
+          <button class="pnrx-btn pnrx-btn--primary pnrx-btn--block" type="submit" style="margin-top:20px">Sign in</button>
+        </form>
+
+        <div class="site-auth__secure">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6.5" width="10" height="6.5" rx="1.4"/><path d="M4.2 6.5V4.6a2.8 2.8 0 015.6 0v1.9"/></svg>
+          Your information is private &amp; encrypted
+        </div>
+        <div class="site-link-row">
+          New to Pep Nation Rx? <a href="intake.html" style="font-family:var(--pnrx-font-heading);font-weight:700">Create an account</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="pnrx-container">
+    <div class="site-footer__grid">
+      <div>
+        <div class="site-logo"><span class="site-logo__mark">P</span>Pep&nbsp;Nation&nbsp;<span class="site-logo__rx">Rx</span></div>
+        <p class="site-footer__mission">Connecting patients with independent, licensed healthcare providers for convenient, affordable telehealth care.</p>
+        <div class="site-footer__badges">
+          <span class="site-footer__badge">HIPAA-secure</span>
+          <span class="site-footer__badge">SSL encrypted</span>
+          <span class="site-footer__badge">Licensed pharmacies</span>
+        </div>
+      </div>
+      <div class="site-footer__col"><h4>Treatments</h4>
+        <a href="browse.html">Weight Management</a><a href="browse.html">Sexual Health</a><a href="browse.html">Hormone Therapy</a><a href="browse.html">Peptide Therapy</a><a href="browse.html">All treatments</a></div>
+      <div class="site-footer__col"><h4>Company</h4>
+        <a href="index.html#how">How it works</a><a href="index.html#care">Our care model</a><a href="index.html#care">Why Pep Nation</a><a href="index.html">Reviews</a></div>
+      <div class="site-footer__col"><h4>Support</h4>
+        <a href="signin.html">Sign in</a><a href="intake.html">Start a visit</a><a href="index.html">Help center</a><a href="index.html">Contact us</a></div>
+    </div>
+    <div class="site-footer__legal">
+      &copy; <span data-year>2026</span> PepNationRX. Telehealth services are provided by independent licensed practitioners. Pep Nation Rx is not a medical provider and does not practice medicine. Not insurance. Not available in all states. Not for emergencies — call 911. &nbsp;&middot;&nbsp; Terms of Service &middot; Privacy Policy &middot; Legal Notices
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>

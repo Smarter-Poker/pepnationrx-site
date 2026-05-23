@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your dashboard — Pep Nation Rx</title>
+<meta name="description" content="Manage your treatment plan, refills, care-team messages and orders in your Pep Nation Rx account.">
+<meta name="theme-color" content="#0E5C6E">
+<meta property="og:title" content="Pep Nation Rx — Patient dashboard">
+<meta property="og:description" content="Manage your treatment plan, refills and care-team messages.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pep Nation Rx">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pnrx-design-system.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body class="pnrx-root">
+<a class="pnrx-skip-link" href="#site-content">Skip to content</a>
+
+<header class="site-header">
+  <div class="pnrx-container site-header__row">
+    <a class="site-logo" href="index.html" aria-label="Pep Nation Rx home">
+      <span class="site-logo__mark">P</span>Pep&nbsp;Nation&nbsp;<span class="site-logo__rx">Rx</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="dashboard.html" aria-current="page">Dashboard</a>
+      <a href="browse.html">Treatments</a>
+      <a href="index.html#how">How it works</a>
+    </nav>
+    <div class="site-header__right">
+      <a class="site-header__signin" href="index.html">Sign out</a>
+      <span class="site-av" style="background:linear-gradient(145deg,#0891B2,#0E5C6E)" aria-hidden="true">JM</span>
+    </div>
+  </div>
+</header>
+
+<main class="site-main" id="site-content">
+
+  <section class="site-dash-hero">
+    <div class="pnrx-container site-dash-hero__row">
+      <div>
+        <div class="pnrx-eyebrow" style="color:var(--pnrx-color-secondary)">Your account</div>
+        <h1 style="margin-top:8px">Welcome back, Jordan</h1>
+        <p>Your treatment is active and on track. Next refill ships automatically.</p>
+      </div>
+      <a class="pnrx-btn pnrx-btn--primary" href="browse.html">Add a treatment</a>
+    </div>
+  </section>
+
+  <section style="padding-bottom:74px">
+    <div class="pnrx-container">
+      <div class="site-dash__grid">
+
+        <div class="pnrx-stack">
+          <div class="pnrx-card">
+            <div class="site-dash__cardhead">
+              <h2>Your active plan</h2>
+              <span class="pnrx-badge pnrx-badge--soft">Active</span>
+            </div>
+            <div class="site-plan-row">
+              <div class="site-plan-thumb">
+                <svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 4v22"/><path d="M6 10c0 5 4 7.5 9 7.5S24 15 24 10"/><path d="M6 19c0 4 4 6.5 9 6.5S24 23 24 19"/></svg>
+              </div>
+              <div style="flex:1;min-width:200px">
+                <h3 class="pnrx-h3" style="font-size:19px">Semaglutide</h3>
+                <p class="pnrx-muted" style="font-size:14px">Weight Management · 3-month plan</p>
+              </div>
+              <div style="text-align:right;font-family:var(--pnrx-font-heading)">
+                <div style="font-weight:900;font-size:20px;color:var(--pnrx-color-fg)">$269<span style="font-size:12.5px;font-weight:600;color:var(--pnrx-color-fg-subtle)">/mo</span></div>
+                <div style="font-size:12px;color:var(--pnrx-color-fg-subtle)">renews Aug 14</div>
+              </div>
+            </div>
+            <div class="site-stat-grid">
+              <div class="site-stat"><div class="k">On plan</div><div class="v">4 months</div></div>
+              <div class="site-stat"><div class="k">Current dose</div><div class="v">0.5 mg</div></div>
+              <div class="site-stat"><div class="k">Deliveries</div><div class="v">4 of 12</div></div>
+            </div>
+            <div class="site-refill">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11l4 4v5h-2"/><path d="M3 7v9h2"/><circle cx="7" cy="17" r="2.2"/><circle cx="15" cy="17" r="2.2"/></svg>
+              <div><b>Next refill ships May 30</b><span> &nbsp;·&nbsp; arriving in discreet packaging within 3–5 days</span></div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+              <a class="pnrx-btn pnrx-btn--secondary" href="product.html">Manage plan</a>
+              <a class="pnrx-btn pnrx-btn--ghost" href="dashboard.html">Message your clinician</a>
+            </div>
+          </div>
+
+          <div class="pnrx-card">
+            <div class="site-dash__cardhead">
+              <h2>Recent orders</h2>
+              <a class="site-dash__seeall" href="dashboard.html">View all</a>
+            </div>
+            <div class="site-order">
+              <span class="site-order__dot" style="background:var(--pnrx-color-accent)"></span>
+              <div class="site-order__main"><b>Semaglutide · 0.5 mg</b><span>Order #PN-10428 · placed May 2</span></div>
+              <span class="site-order__status" style="color:var(--pnrx-color-accent-deep)">Delivered</span>
+            </div>
+            <div class="site-order">
+              <span class="site-order__dot" style="background:var(--pnrx-color-primary)"></span>
+              <div class="site-order__main"><b>Semaglutide · 0.5 mg</b><span>Order #PN-10915 · ships May 30</span></div>
+              <span class="site-order__status" style="color:var(--pnrx-color-primary)">Scheduled</span>
+            </div>
+            <div class="site-order">
+              <span class="site-order__dot" style="background:var(--pnrx-color-fg-subtle)"></span>
+              <div class="site-order__main"><b>Semaglutide · 0.25 mg</b><span>Order #PN-09733 · placed Mar 28</span></div>
+              <span class="site-order__status" style="color:var(--pnrx-color-fg-subtle)">Delivered</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pnrx-stack">
+          <div class="pnrx-card">
+            <div class="site-dash__cardhead">
+              <h2>Care team</h2>
+              <span class="pnrx-badge pnrx-badge--save">1 new</span>
+            </div>
+            <div class="site-msg">
+              <span class="site-av" style="background:linear-gradient(145deg,#059669,#047857);flex:0 0 40px" aria-hidden="true">DR</span>
+              <div class="site-msg__body">
+                <b>Dr. Reyes, NP</b>
+                <p>Great progress at your 4-month check-in. We'll hold your dose steady for now.</p>
+                <time>2 days ago</time>
+              </div>
+            </div>
+            <div class="site-msg">
+              <span class="site-av" style="background:linear-gradient(145deg,#0891B2,#0E5C6E);flex:0 0 40px" aria-hidden="true">CT</span>
+              <div class="site-msg__body">
+                <b>Care team</b>
+                <p>Your May refill is confirmed and scheduled to ship May 30.</p>
+                <time>5 days ago</time>
+              </div>
+            </div>
+            <a class="pnrx-btn pnrx-btn--primary pnrx-btn--block" href="dashboard.html" style="margin-top:16px">Open messages</a>
+          </div>
+
+          <div class="pnrx-card">
+            <div class="site-dash__cardhead"><h2>Quick actions</h2></div>
+            <div class="site-qa">
+              <a href="dashboard.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h12l3 3v4h-2"/><path d="M3 8v7h2"/><circle cx="7" cy="15" r="2"/><circle cx="14" cy="15" r="2"/></svg> Track a shipment</a>
+              <a href="dashboard.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v12M3 9h12"/><circle cx="9" cy="9" r="8"/></svg> Reschedule a refill</a>
+              <a href="signin.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="12" height="9" rx="1.6"/><path d="M6 7V5a3 3 0 016 0v2"/></svg> Update payment method</a>
+              <a href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7.5"/><path d="M9 12.5v-3M9 6h.01"/></svg> Help center</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="pnrx-container">
+    <div class="site-footer__grid">
+      <div>
+        <div class="site-logo"><span class="site-logo__mark">P</span>Pep&nbsp;Nation&nbsp;<span class="site-logo__rx">Rx</span></div>
+        <p class="site-footer__mission">Connecting patients with independent, licensed healthcare providers for convenient, affordable telehealth care.</p>
+        <div class="site-footer__badges">
+          <span class="site-footer__badge">HIPAA-secure</span>
+          <span class="site-footer__badge">SSL encrypted</span>
+          <span class="site-footer__badge">Licensed pharmacies</span>
+        </div>
+      </div>
+      <div class="site-footer__col"><h4>Treatments</h4>
+        <a href="browse.html">Weight Management</a><a href="browse.html">Sexual Health</a><a href="browse.html">Hormone Therapy</a><a href="browse.html">Peptide Therapy</a><a href="browse.html">All treatments</a></div>
+      <div class="site-footer__col"><h4>Company</h4>
+        <a href="index.html#how">How it works</a><a href="index.html#care">Our care model</a><a href="index.html#care">Why Pep Nation</a><a href="index.html">Reviews</a></div>
+      <div class="site-footer__col"><h4>Support</h4>
+        <a href="dashboard.html">Dashboard</a><a href="intake.html">Start a visit</a><a href="index.html">Help center</a><a href="index.html">Contact us</a></div>
+    </div>
+    <div class="site-footer__legal">
+      &copy; <span data-year>2026</span> PepNationRX. Telehealth services are provided by independent licensed practitioners. Pep Nation Rx is not a medical provider and does not practice medicine. Not insurance. Not available in all states. Not for emergencies — call 911. &nbsp;&middot;&nbsp; Terms of Service &middot; Privacy Policy &middot; Legal Notices
+    </div>
+  </div>
+</footer>
+
+<script src="app.js" defer></script>
+</body>
+</html>
