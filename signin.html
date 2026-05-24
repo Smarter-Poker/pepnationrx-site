@@ -14,6 +14,7 @@
 <meta property="og:title" content="Sign in — Pep Nation Rx">
 <meta property="og:description" content="Sign in to manage your treatment plan, refills and care-team messages.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('pnrx-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-pnrx-theme',t);}catch(e){}</script>
 <link rel="stylesheet" href="pnrx-design-system.css">
 <link rel="stylesheet" href="app.css">
 </head>
@@ -33,15 +34,13 @@
     <div class="site-header__right">
       <a class="site-header__signin" href="signin.html" aria-current="page">Sign in</a>
       <a class="pnrx-btn pnrx-btn--primary" href="intake.html">Start your visit</a>
-      <button class="site-burger" data-burger aria-label="Menu" aria-expanded="false">
-        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-      </button>
     </div>
   </div>
 </header>
 
 <main class="site-main" id="site-content">
   <div class="site-auth">
+    <!-- BRAND ASIDE -->
     <aside class="site-auth__aside">
       <div class="pnrx-eyebrow" style="color:var(--pnrx-color-secondary)">Welcome back</div>
       <h2 style="margin-top:10px">Your care, your plan, all in one place.</h2>
@@ -53,6 +52,7 @@
       </div>
     </aside>
 
+    <!-- FORM -->
     <div class="site-auth__form">
       <div class="site-auth__card">
         <h1 class="pnrx-h2" style="font-size:27px">Sign in to your account</h1>
@@ -69,7 +69,7 @@
             <div class="site-pwfield">
               <input class="pnrx-input" id="auth-pw" type="password" autocomplete="current-password" placeholder="Your password" style="width:100%;padding-right:42px" required data-minlength="8">
               <button class="site-pwtoggle" type="button" data-pw-toggle="auth-pw" aria-label="Show password">
-                <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 9s3-5.5 8-5.5S17 9 17 9s-3 5.5-8 5.5S1 9 1 9z"/><circle cx="9" cy="9" r="2.4"/></svg>
+                <svg aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 9s3-5.5 8-5.5S17 9 17 9s-3 5.5-8 5.5S1 9 1 9z"/><circle cx="9" cy="9" r="2.4"/></svg>
               </button>
             </div>
             <span class="pnrx-field__error" id="auth-pw-err" role="alert" hidden></span>
@@ -79,7 +79,7 @@
         </form>
 
         <div class="site-auth__secure">
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6.5" width="10" height="6.5" rx="1.4"/><path d="M4.2 6.5V4.6a2.8 2.8 0 015.6 0v1.9"/></svg>
+          <svg aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6.5" width="10" height="6.5" rx="1.4"/><path d="M4.2 6.5V4.6a2.8 2.8 0 015.6 0v1.9"/></svg>
           Your information is private &amp; encrypted
         </div>
         <div class="site-link-row">

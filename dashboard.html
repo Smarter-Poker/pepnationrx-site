@@ -14,6 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem('pnrx-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-pnrx-theme',t);}catch(e){}</script>
 <link rel="stylesheet" href="pnrx-design-system.css">
 <link rel="stylesheet" href="app.css">
 </head>
@@ -39,6 +40,7 @@
 
 <main class="site-main" id="site-content">
 
+  <!-- WELCOME HERO -->
   <section class="site-dash-hero">
     <div class="pnrx-container site-dash-hero__row">
       <div>
@@ -54,7 +56,9 @@
     <div class="pnrx-container">
       <div class="site-dash__grid">
 
+        <!-- MAIN COLUMN -->
         <div class="pnrx-stack">
+          <!-- active plan -->
           <div class="pnrx-card">
             <div class="site-dash__cardhead">
               <h2>Your active plan</h2>
@@ -62,7 +66,7 @@
             </div>
             <div class="site-plan-row">
               <div class="site-plan-thumb">
-                <svg width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 4v22"/><path d="M6 10c0 5 4 7.5 9 7.5S24 15 24 10"/><path d="M6 19c0 4 4 6.5 9 6.5S24 23 24 19"/></svg>
+                <svg aria-hidden="true" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 4v22"/><path d="M6 10c0 5 4 7.5 9 7.5S24 15 24 10"/><path d="M6 19c0 4 4 6.5 9 6.5S24 23 24 19"/></svg>
               </div>
               <div style="flex:1;min-width:200px">
                 <h3 class="pnrx-h3" style="font-size:19px">Semaglutide</h3>
@@ -79,7 +83,7 @@
               <div class="site-stat"><div class="k">Deliveries</div><div class="v">4 of 12</div></div>
             </div>
             <div class="site-refill">
-              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11l4 4v5h-2"/><path d="M3 7v9h2"/><circle cx="7" cy="17" r="2.2"/><circle cx="15" cy="17" r="2.2"/></svg>
+              <svg aria-hidden="true" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11l4 4v5h-2"/><path d="M3 7v9h2"/><circle cx="7" cy="17" r="2.2"/><circle cx="15" cy="17" r="2.2"/></svg>
               <div><b>Next refill ships May 30</b><span> &nbsp;·&nbsp; arriving in discreet packaging within 3–5 days</span></div>
             </div>
             <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
@@ -88,6 +92,7 @@
             </div>
           </div>
 
+          <!-- recent orders -->
           <div class="pnrx-card">
             <div class="site-dash__cardhead">
               <h2>Recent orders</h2>
@@ -111,7 +116,9 @@
           </div>
         </div>
 
+        <!-- SIDE COLUMN -->
         <div class="pnrx-stack">
+          <!-- messages -->
           <div class="pnrx-card">
             <div class="site-dash__cardhead">
               <h2>Care team</h2>
@@ -136,13 +143,14 @@
             <a class="pnrx-btn pnrx-btn--primary pnrx-btn--block" href="dashboard.html" style="margin-top:16px">Open messages</a>
           </div>
 
+          <!-- quick actions -->
           <div class="pnrx-card">
             <div class="site-dash__cardhead"><h2>Quick actions</h2></div>
             <div class="site-qa">
-              <a href="dashboard.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h12l3 3v4h-2"/><path d="M3 8v7h2"/><circle cx="7" cy="15" r="2"/><circle cx="14" cy="15" r="2"/></svg> Track a shipment</a>
-              <a href="dashboard.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v12M3 9h12"/><circle cx="9" cy="9" r="8"/></svg> Reschedule a refill</a>
-              <a href="signin.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="12" height="9" rx="1.6"/><path d="M6 7V5a3 3 0 016 0v2"/></svg> Update payment method</a>
-              <a href="index.html"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7.5"/><path d="M9 12.5v-3M9 6h.01"/></svg> Help center</a>
+              <a href="dashboard.html"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h12l3 3v4h-2"/><path d="M3 8v7h2"/><circle cx="7" cy="15" r="2"/><circle cx="14" cy="15" r="2"/></svg> Track a shipment</a>
+              <a href="dashboard.html"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v12M3 9h12"/><circle cx="9" cy="9" r="8"/></svg> Reschedule a refill</a>
+              <a href="signin.html"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="12" height="9" rx="1.6"/><path d="M6 7V5a3 3 0 016 0v2"/></svg> Update payment method</a>
+              <a href="index.html"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="7.5"/><path d="M9 12.5v-3M9 6h.01"/></svg> Help center</a>
             </div>
           </div>
         </div>

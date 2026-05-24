@@ -14,6 +14,7 @@
 <meta property="og:title" content="Semaglutide — clinician-reviewed weight management">
 <meta property="og:description" content="A weekly GLP-1 injection that supports steady weight loss. Clinician-reviewed plans from $245/mo.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>try{var t=localStorage.getItem('pnrx-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-pnrx-theme',t);}catch(e){}</script>
 <link rel="stylesheet" href="pnrx-design-system.css">
 <link rel="stylesheet" href="app.css">
 </head>
@@ -33,9 +34,6 @@
     <div class="site-header__right">
       <a class="site-header__signin" href="signin.html">Sign in</a>
       <a class="pnrx-btn pnrx-btn--primary" href="intake.html">Start your visit</a>
-      <button class="site-burger" data-burger aria-label="Menu" aria-expanded="false">
-        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
-      </button>
     </div>
   </div>
 </header>
@@ -49,6 +47,7 @@
     </div>
 
     <div class="site-pp__grid">
+      <!-- VISUAL -->
       <div class="site-pp__visual">
         <div class="site-vialbox"><div class="site-vial"></div></div>
         <div style="display:flex;gap:8px;margin-top:20px;flex-wrap:wrap">
@@ -64,9 +63,10 @@
         </div>
       </div>
 
+      <!-- DETAIL + PLANS -->
       <div>
         <div class="site-pp__meta">
-          <span class="m"><svg width="16" height="16" fill="none" stroke="var(--pnrx-color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5 2.7v3.6c0 3.2-2 5.4-5 6.2-3-.8-5-3-5-6.2V4.2z"/><path d="M5.6 8l1.6 1.6L10.6 6"/></svg> Clinician-reviewed</span>
+          <span class="m"><svg aria-hidden="true" width="16" height="16" fill="none" stroke="var(--pnrx-color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l5 2.7v3.6c0 3.2-2 5.4-5 6.2-3-.8-5-3-5-6.2V4.2z"/><path d="M5.6 8l1.6 1.6L10.6 6"/></svg> Clinician-reviewed</span>
           <span class="m"><span style="color:var(--pnrx-gold)">&#9733;</span> 4.9 &nbsp;(1,240 reviews)</span>
         </div>
         <h1>Semaglutide</h1>
@@ -98,14 +98,14 @@
         <div style="margin-top:18px">
           <a class="pnrx-btn pnrx-btn--primary pnrx-btn--lg pnrx-btn--block" href="intake.html">Continue to medical intake</a>
           <div class="site-cta-note">
-            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6.5" width="10" height="6.5" rx="1.4"/><path d="M4.2 6.5V4.6a2.8 2.8 0 015.6 0v1.9"/></svg>
+            <svg aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6.5" width="10" height="6.5" rx="1.4"/><path d="M4.2 6.5V4.6a2.8 2.8 0 015.6 0v1.9"/></svg>
             You won't be charged until a licensed clinician approves your treatment.
           </div>
         </div>
 
         <div class="pnrx-safety" style="margin-top:18px">
           <div class="pnrx-safety__label">
-            <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 5.5v3M7.5 11h.01M6.4 2.4L1 11a1.2 1.2 0 001 1.9h9a1.2 1.2 0 001-1.9L8.6 2.4a1.2 1.2 0 00-2.1 0z"/></svg>
+            <svg aria-hidden="true" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 5.5v3M7.5 11h.01M6.4 2.4L1 11a1.2 1.2 0 001 1.9h9a1.2 1.2 0 001-1.9L8.6 2.4a1.2 1.2 0 00-2.1 0z"/></svg>
             Important safety information
           </div>
           <p>Compounded medications are not FDA-approved; the FDA does not evaluate compounded drugs for safety, effectiveness or quality. They are prepared by licensed 503A compounding pharmacists for individual patients based on a valid prescription. All prescriptions require a clinical intake reviewed by an independent, licensed provider; a prescription is not guaranteed and is at the sole discretion of the clinician. Not available in all states. Not insurance. Not for emergencies — call 911.</p>
@@ -114,6 +114,7 @@
     </div>
   </div>
 
+  <!-- HOW IT WORKS -->
   <section class="site-section site-section--surface site-section--tight">
     <div class="pnrx-container">
       <div class="pnrx-section-header pnrx-section-header--center">
@@ -134,6 +135,7 @@
     </div>
   </section>
 
+  <!-- FAQ -->
   <section class="site-section">
     <div class="pnrx-container" style="max-width:760px">
       <div class="pnrx-section-header pnrx-section-header--center" style="margin-bottom:28px">
