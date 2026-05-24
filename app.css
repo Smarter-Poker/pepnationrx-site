@@ -7,9 +7,17 @@
    intake, signin). Prefixed `site-` to stay clear of `pnrx-` components.
    ============================================================================ */
 
-html{overflow-x:hidden}
+html{overflow-x:hidden;background:var(--pnrx-color-bg)}
 body{margin:0}
 .site-main{min-height:60vh}
+/* theme transition: smooth the light/dark swap */
+.pnrx-root,.site-header,.pnrx-card,.site-panel{
+  transition:background-color var(--pnrx-dur) var(--pnrx-ease),
+             border-color var(--pnrx-dur) var(--pnrx-ease);
+}
+@media (prefers-reduced-motion:reduce){
+  .pnrx-root,.site-header,.pnrx-card,.site-panel{transition:none}
+}
 
 /* ---- skip link target ---- */
 #site-content{scroll-margin-top:90px}
@@ -19,10 +27,21 @@ body{margin:0}
    ================================================================= */
 .site-header{
   position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.86);
+  background:var(--pnrx-color-header);
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
   border-bottom:1px solid var(--pnrx-color-border);
 }
+.site-theme-toggle{
+  flex:0 0 38px;width:38px;height:38px;border-radius:10px;
+  border:1px solid var(--pnrx-color-border);
+  background:var(--pnrx-color-surface);color:var(--pnrx-color-fg-muted);
+  display:grid;place-items:center;cursor:pointer;
+  transition:color var(--pnrx-dur) var(--pnrx-ease),
+             border-color var(--pnrx-dur) var(--pnrx-ease);
+}
+.site-theme-toggle:hover{color:var(--pnrx-color-primary);
+  border-color:var(--pnrx-color-border-strong)}
+.site-theme-toggle:focus-visible{outline:none;box-shadow:var(--pnrx-focus-ring)}
 .site-header__row{display:flex;align-items:center;gap:30px;height:74px}
 .site-logo{display:flex;align-items:center;gap:10px;font-family:var(--pnrx-font-heading);
   font-weight:800;font-size:21px;color:var(--pnrx-color-fg);letter-spacing:-.03em}
@@ -74,6 +93,7 @@ body{margin:0}
 .site-section--surface{background:var(--pnrx-color-surface);
   border-top:1px solid var(--pnrx-color-border);
   border-bottom:1px solid var(--pnrx-color-border)}
+.site-section--tinted{background:var(--pnrx-tint-bg)}
 /* Scroll-triggered reveal. Progressive enhancement: content is visible by
    default; app.js adds `.pre` to arm the hidden state, then `.is-visible`
    when the element scrolls into view. Safe with JS disabled. */
@@ -94,7 +114,7 @@ body{margin:0}
   background:
     radial-gradient(680px 380px at 88% 6%,rgba(34,211,238,.34),transparent 68%),
     radial-gradient(560px 420px at 2% 96%,rgba(5,150,105,.20),transparent 70%),
-    linear-gradient(180deg,#F4FBFC,#E5F6F8);
+    var(--pnrx-hero-bg);
 }
 .site-hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;
   align-items:center;padding:78px 0 84px}
@@ -212,13 +232,13 @@ body{margin:0}
    ================================================================= */
 .site-pp__grid{display:grid;grid-template-columns:1fr 1.12fr;gap:44px;
   align-items:start}
-.site-pp__visual{background:linear-gradient(165deg,#fff,var(--pnrx-color-surface-tint));
+.site-pp__visual{background:linear-gradient(165deg,var(--pnrx-color-surface),var(--pnrx-color-surface-tint));
   border:1px solid var(--pnrx-color-border);border-radius:22px;padding:34px;
   box-shadow:var(--pnrx-shadow-card);position:sticky;top:100px}
 .site-vialbox{height:280px;border-radius:16px;display:grid;place-items:center;
   overflow:hidden;
-  background:radial-gradient(420px 240px at 50% 0%,#fff,transparent),
-    repeating-linear-gradient(135deg,#EAF8FA 0 18px,#E1F3F6 18px 36px)}
+  background:radial-gradient(420px 240px at 50% 0%,var(--pnrx-color-surface),transparent),
+    repeating-linear-gradient(135deg,var(--pnrx-color-surface-tint) 0 18px,var(--pnrx-color-border) 18px 36px)}
 .site-vial{width:96px;height:188px;border-radius:14px 14px 18px 18px;
   background:linear-gradient(160deg,#fff,#E6F6F8);border:1.5px solid #CDE9ED;
   box-shadow:0 18px 36px -14px rgba(15,42,51,.4);position:relative}
@@ -276,7 +296,7 @@ body{margin:0}
   color:#fff;transition:background var(--pnrx-dur) var(--pnrx-ease),
                          border-color var(--pnrx-dur) var(--pnrx-ease)}
 .site-opt[aria-checked="true"]{border-color:var(--pnrx-color-primary);
-  background:linear-gradient(180deg,#F2FCFD,var(--pnrx-color-surface))}
+  background:linear-gradient(180deg,var(--pnrx-color-surface-tint),var(--pnrx-color-surface))}
 .site-opt[aria-checked="true"] .site-opt__check{
   background:var(--pnrx-color-primary);border-color:var(--pnrx-color-primary)}
 .site-intake-foot{display:flex;justify-content:space-between;align-items:center;
@@ -385,8 +405,9 @@ body{margin:0}
   .site-header{position:sticky}
   .site-logo{font-size:17px;gap:8px}
   .site-logo__mark{width:32px;height:32px;font-size:15px;border-radius:9px}
-  .site-header__right{gap:0}
+  .site-header__right{gap:8px}
   .site-header .pnrx-btn{padding:10px 15px;font-size:13px;min-height:40px;border-radius:10px}
+  .site-theme-toggle{flex:0 0 34px;width:34px;height:34px}
   .site-howgrid,.site-tgrid,.site-footer__grid{grid-template-columns:1fr}
   .site-hero__grid{padding:54px 0 60px}
   .site-section{padding:54px 0}

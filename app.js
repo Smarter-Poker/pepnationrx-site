@@ -15,6 +15,45 @@
     });
   }
 
+  /* ---- theme: light / dark -------------------------------------------- */
+  /* Dark follows the OS by default; this toggle lets the user override and
+     remembers the choice. `data-pnrx-theme` on <html> drives the CSS. */
+  (function () {
+    var root = document.documentElement;
+    var stored = null;
+    try { stored = localStorage.getItem('pnrx-theme'); } catch (e) {}
+    if (stored === 'light' || stored === 'dark') root.setAttribute('data-pnrx-theme', stored);
+
+    var SUN = '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="3.6"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.2 4.2l1.4 1.4M14.4 14.4l1.4 1.4M15.8 4.2l-1.4 1.4M5.6 14.4l-1.4 1.4"/></svg>';
+    var MOON = '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11.5A6.5 6.5 0 018.5 4a6.5 6.5 0 100 13 6.5 6.5 0 007.5-5.5z"/></svg>';
+
+    function effective() {
+      var attr = root.getAttribute('data-pnrx-theme');
+      if (attr === 'dark' || attr === 'light') return attr;
+      return (window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+
+    var btn = document.createElement('button');
+    btn.className = 'site-theme-toggle';
+    btn.type = 'button';
+    function render() {
+      var dark = effective() === 'dark';
+      btn.innerHTML = dark ? SUN : MOON;
+      btn.setAttribute('aria-label', dark ? 'Switch to light theme' : 'Switch to dark theme');
+      btn.title = dark ? 'Light theme' : 'Dark theme';
+    }
+    render();
+    btn.addEventListener('click', function () {
+      var next = effective() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-pnrx-theme', next);
+      try { localStorage.setItem('pnrx-theme', next); } catch (e) {}
+      render();
+    });
+    var right = document.querySelector('.site-header__right');
+    if (right) right.insertBefore(btn, right.firstChild);
+  })();
+
   /* ---- mobile nav toggle ---------------------------------------------- */
   document.querySelectorAll('[data-burger]').forEach(function (btn) {
     btn.addEventListener('click', function () {

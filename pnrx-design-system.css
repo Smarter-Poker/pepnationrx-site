@@ -91,12 +91,20 @@
 
   /* -- focus -- */
   --pnrx-focus-ring:0 0 0 3px rgba(8,145,178,.45);
+
+  /* -- theme-aware surfaces (remapped in dark mode) -- */
+  --pnrx-color-header:rgba(255,255,255,.86);
+  --pnrx-hero-bg:linear-gradient(180deg,#F4FBFC,#E5F6F8);
+  --pnrx-tint-bg:linear-gradient(180deg,#F4FBFC,#E9F7F9);
 }
 
-/* Dark mode — semantic tokens remap; components are untouched. */
+/* ----- DARK THEME -----------------------------------------------------------
+   Semantic tokens remap; components are untouched. Dark activates automatically
+   when the OS prefers dark — unless the user explicitly chose light
+   (data-pnrx-theme="light") — and is forced on by data-pnrx-theme="dark".
+   The header theme toggle (app.js) sets that attribute + persists it. */
 @media (prefers-color-scheme:dark){
-  :root[data-pnrx-theme="auto"],
-  :root[data-pnrx-theme="dark"]{
+  :root:not([data-pnrx-theme="light"]){
     --pnrx-color-fg:#E7F6F8;
     --pnrx-color-fg-muted:#A7C4CB;
     --pnrx-color-fg-subtle:#7B969D;
@@ -105,9 +113,27 @@
     --pnrx-color-surface-tint:#123A44;
     --pnrx-color-border:#1E444F;
     --pnrx-color-border-strong:#2A5965;
+    --pnrx-color-header:rgba(11,32,39,.85);
+    --pnrx-hero-bg:linear-gradient(180deg,#0B2027,#0F2E38);
+    --pnrx-tint-bg:linear-gradient(180deg,#0B2027,#10333D);
     --pnrx-shadow-card:0 2px 6px rgba(0,0,0,.4),0 16px 34px -16px rgba(0,0,0,.6);
     --pnrx-shadow-lift:0 10px 24px rgba(0,0,0,.5),0 30px 60px -20px rgba(0,0,0,.7);
   }
+}
+:root[data-pnrx-theme="dark"]{
+  --pnrx-color-fg:#E7F6F8;
+  --pnrx-color-fg-muted:#A7C4CB;
+  --pnrx-color-fg-subtle:#7B969D;
+  --pnrx-color-bg:#0B2027;
+  --pnrx-color-surface:#102E37;
+  --pnrx-color-surface-tint:#123A44;
+  --pnrx-color-border:#1E444F;
+  --pnrx-color-border-strong:#2A5965;
+  --pnrx-color-header:rgba(11,32,39,.85);
+  --pnrx-hero-bg:linear-gradient(180deg,#0B2027,#0F2E38);
+  --pnrx-tint-bg:linear-gradient(180deg,#0B2027,#10333D);
+  --pnrx-shadow-card:0 2px 6px rgba(0,0,0,.4),0 16px 34px -16px rgba(0,0,0,.6);
+  --pnrx-shadow-lift:0 10px 24px rgba(0,0,0,.5),0 30px 60px -20px rgba(0,0,0,.7);
 }
 
 /* ---------------------------------------------------------------------------
@@ -324,7 +350,7 @@
 .pnrx-plan:focus-visible{outline:none;box-shadow:var(--pnrx-focus-ring)}
 .pnrx-plan[aria-checked="true"]{
   border-color:var(--pnrx-color-primary);
-  background:linear-gradient(180deg,#F2FCFD,var(--pnrx-color-surface));
+  background:linear-gradient(180deg,var(--pnrx-color-surface-tint),var(--pnrx-color-surface));
   box-shadow:0 8px 20px -12px rgba(8,145,178,.5);
 }
 .pnrx-plan__radio{
