@@ -184,6 +184,7 @@
              background var(--pnrx-dur) var(--pnrx-ease);
 }
 .pnrx-btn:focus-visible{outline:none;box-shadow:var(--pnrx-focus-ring)}
+.pnrx-btn:active{transform:scale(.97)}
 .pnrx-btn--primary{
   background:linear-gradient(145deg,var(--pnrx-green-500),var(--pnrx-color-accent-deep));
   color:var(--pnrx-color-on-accent);
@@ -379,7 +380,53 @@
 .pnrx-safety p{font-size:12.5px;color:#7A6243;line-height:1.55}
 
 /* ---------------------------------------------------------------------------
-   13. ACCESSIBILITY & MOTION
+   13. TOAST NOTIFICATIONS
+   --------------------------------------------------------------------------- */
+.pnrx-toast-region{
+  position:fixed;z-index:1000;bottom:20px;right:20px;
+  display:flex;flex-direction:column;gap:10px;
+  width:min(360px,calc(100vw - 32px));pointer-events:none;
+}
+.pnrx-toast{
+  display:flex;align-items:flex-start;gap:11px;pointer-events:auto;
+  background:var(--pnrx-color-surface);
+  border:1px solid var(--pnrx-color-border);
+  border-left:4px solid var(--pnrx-color-primary);
+  border-radius:var(--pnrx-radius-md);
+  box-shadow:var(--pnrx-shadow-lift);
+  padding:13px 15px;
+  opacity:0;transform:translateY(12px) scale(.98);
+  transition:opacity var(--pnrx-dur-slow) var(--pnrx-ease),
+             transform var(--pnrx-dur-slow) var(--pnrx-ease);
+}
+.pnrx-toast.is-in{opacity:1;transform:none}
+.pnrx-toast--success{border-left-color:var(--pnrx-color-accent)}
+.pnrx-toast--error{border-left-color:var(--pnrx-color-destructive)}
+.pnrx-toast__icon{
+  flex:0 0 22px;width:22px;height:22px;border-radius:7px;
+  display:grid;place-items:center;color:#fff;margin-top:1px;
+  background:var(--pnrx-color-primary);
+}
+.pnrx-toast--success .pnrx-toast__icon{background:var(--pnrx-color-accent)}
+.pnrx-toast--error .pnrx-toast__icon{background:var(--pnrx-color-destructive)}
+.pnrx-toast__body{flex:1;min-width:0}
+.pnrx-toast__title{
+  font-family:var(--pnrx-font-heading);font-weight:700;
+  font-size:14px;color:var(--pnrx-color-fg);
+}
+.pnrx-toast__msg{font-size:13px;color:var(--pnrx-color-fg-muted);margin-top:1px}
+.pnrx-toast__close{
+  flex:0 0 auto;background:none;border:0;cursor:pointer;padding:2px;
+  color:var(--pnrx-color-fg-subtle);line-height:0;border-radius:6px;
+}
+.pnrx-toast__close:hover{color:var(--pnrx-color-fg)}
+.pnrx-toast__close:focus-visible{outline:none;box-shadow:var(--pnrx-focus-ring)}
+@media(max-width:620px){
+  .pnrx-toast-region{left:16px;right:16px;bottom:16px;width:auto}
+}
+
+/* ---------------------------------------------------------------------------
+   14. ACCESSIBILITY & MOTION
    --------------------------------------------------------------------------- */
 .pnrx-visually-hidden{
   position:absolute;width:1px;height:1px;overflow:hidden;
