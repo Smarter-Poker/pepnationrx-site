@@ -63,8 +63,6 @@ body{margin:0}
 .site-header__signin{font-family:var(--pnrx-font-heading);font-weight:600;
   font-size:15px;color:var(--pnrx-color-fg-muted)}
 .site-header__signin:hover{color:var(--pnrx-color-primary)}
-.site-burger{display:none;background:none;border:0;cursor:pointer;padding:6px;
-  color:var(--pnrx-color-fg)}
 
 /* =================================================================
    FOOTER
@@ -398,8 +396,8 @@ body{margin:0}
   .site-auth__aside{padding:48px 40px}
 }
 @media(max-width:620px){
-  /* compact mobile header: logo + one CTA; nav lives in the footer */
-  .site-nav,.site-header__signin,.site-burger{display:none}
+  /* compact mobile header: logo + theme toggle + one CTA; nav lives in the footer */
+  .site-nav,.site-header__signin{display:none}
   .pnrx-container{padding-inline:16px}
   .site-header__row{gap:12px;height:64px}
   .site-header{position:sticky}

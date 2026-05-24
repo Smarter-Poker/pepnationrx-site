@@ -24,8 +24,8 @@
     try { stored = localStorage.getItem('pnrx-theme'); } catch (e) {}
     if (stored === 'light' || stored === 'dark') root.setAttribute('data-pnrx-theme', stored);
 
-    var SUN = '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="3.6"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.2 4.2l1.4 1.4M14.4 14.4l1.4 1.4M15.8 4.2l-1.4 1.4M5.6 14.4l-1.4 1.4"/></svg>';
-    var MOON = '<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11.5A6.5 6.5 0 018.5 4a6.5 6.5 0 100 13 6.5 6.5 0 007.5-5.5z"/></svg>';
+    var SUN = '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10" cy="10" r="3.6"/><path d="M10 2v2M10 16v2M2 10h2M16 10h2M4.2 4.2l1.4 1.4M14.4 14.4l1.4 1.4M15.8 4.2l-1.4 1.4M5.6 14.4l-1.4 1.4"/></svg>';
+    var MOON = '<svg aria-hidden="true" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 11.5A6.5 6.5 0 018.5 4a6.5 6.5 0 100 13 6.5 6.5 0 007.5-5.5z"/></svg>';
 
     function effective() {
       var attr = root.getAttribute('data-pnrx-theme');
@@ -53,25 +53,6 @@
     var right = document.querySelector('.site-header__right');
     if (right) right.insertBefore(btn, right.firstChild);
   })();
-
-  /* ---- mobile nav toggle ---------------------------------------------- */
-  document.querySelectorAll('[data-burger]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var nav = document.querySelector('.site-nav');
-      if (!nav) return;
-      var open = nav.style.display === 'flex';
-      nav.style.display = open ? '' : 'flex';
-      nav.style.position = 'absolute';
-      nav.style.flexDirection = 'column';
-      nav.style.top = '74px';
-      nav.style.left = '0';
-      nav.style.right = '0';
-      nav.style.background = '#fff';
-      nav.style.padding = open ? '' : '16px 28px';
-      nav.style.borderBottom = open ? '' : '1px solid var(--pnrx-color-border)';
-      btn.setAttribute('aria-expanded', String(!open));
-    });
-  });
 
   /* ---- segmented control (browse filter) ------------------------------ */
   document.querySelectorAll('[data-segmented]').forEach(function (group) {
@@ -175,11 +156,11 @@
 
   /* ---- toast notifications -------------------------------------------- */
   var ICONS = {
-    success: '<svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-7"/></svg>',
-    error: '<svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v4M7 10.5h.01"/></svg>',
-    info: '<svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6.5v4M7 4h.01"/></svg>'
+    success: '<svg aria-hidden="true" width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-7"/></svg>',
+    error: '<svg aria-hidden="true" width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v4M7 10.5h.01"/></svg>',
+    info: '<svg aria-hidden="true" width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6.5v4M7 4h.01"/></svg>'
   };
-  var CLOSE = '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7"/></svg>';
+  var CLOSE = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7"/></svg>';
 
   function toastRegion() {
     var r = document.querySelector('.pnrx-toast-region');
