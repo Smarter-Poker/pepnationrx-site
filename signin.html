@@ -54,11 +54,11 @@
 
     <!-- FORM -->
     <div class="site-auth__form">
-      <div class="site-auth__card">
-        <h1 class="pnrx-h2" style="font-size:27px">Sign in to your account</h1>
-        <p class="pnrx-muted" style="margin-top:6px;font-size:15px">Enter your credentials to continue.</p>
+      <div class="site-auth__card" id="auth-card" data-mode="signin">
+        <h1 class="pnrx-h2" style="font-size:27px" id="auth-title">Sign in to your account</h1>
+        <p class="pnrx-muted" style="margin-top:6px;font-size:15px" id="auth-subtitle">Enter your credentials to continue.</p>
 
-        <form style="margin-top:24px" data-validate novalidate>
+        <form id="auth-form" style="margin-top:24px" data-validate data-pnrx-auth="signin" novalidate>
           <div class="pnrx-field" style="margin-bottom:16px">
             <label class="pnrx-label" for="auth-email">Email address</label>
             <input class="pnrx-input" id="auth-email" type="email" autocomplete="email" placeholder="you@example.com" required>
@@ -75,7 +75,8 @@
             <span class="pnrx-field__error" id="auth-pw-err" role="alert" hidden></span>
             <a href="signin.html" style="font-size:12.5px;font-family:var(--pnrx-font-heading);font-weight:600;margin-top:6px;align-self:flex-end">Forgot password?</a>
           </div>
-          <button class="pnrx-btn pnrx-btn--primary pnrx-btn--block" type="submit" style="margin-top:20px">Sign in</button>
+          <span class="pnrx-field__error" data-pnrx-auth-error role="alert" hidden style="margin-top:14px;display:block"></span>
+          <button class="pnrx-btn pnrx-btn--primary pnrx-btn--block" type="submit" style="margin-top:20px" id="auth-submit">Sign in</button>
         </form>
 
         <div class="site-auth__secure">
@@ -83,7 +84,8 @@
           Your information is private &amp; encrypted
         </div>
         <div class="site-link-row">
-          New to Pep Nation Rx? <a href="intake.html" style="font-family:var(--pnrx-font-heading);font-weight:700">Create an account</a>
+          <span data-auth-toggle-text>New to Pep Nation Rx?</span>
+          <a href="#" id="auth-toggle" style="font-family:var(--pnrx-font-heading);font-weight:700">Create an account</a>
         </div>
       </div>
     </div>
@@ -115,6 +117,62 @@
   </div>
 </footer>
 
+<script src="api.js" defer></script>
 <script src="app.js" defer></script>
+<script defer>
+/* signin.html — page-level interactions:
+   * toggle between Sign-in and Register modes (single card)
+   * if backend is reachable AND the user is already signed in, jump straight
+     to the dashboard (so refreshing /signin after sign-in is graceful)
+*/
+document.addEventListener('DOMContentLoaded', function () {
+  var card   = document.getElementById('auth-card');
+  var form   = document.getElementById('auth-form');
+  var title  = document.getElementById('auth-title');
+  var sub    = document.getElementById('auth-subtitle');
+  var submit = document.getElementById('auth-submit');
+  var toggle = document.getElementById('auth-toggle');
+  var toggleText = document.querySelector('[data-auth-toggle-text]');
+  var errSlot = form.querySelector('[data-pnrx-auth-error]');
+  function setMode(mode) {
+    card.dataset.mode = mode;
+    if (mode === 'register') {
+      title.textContent = 'Create your account';
+      sub.textContent   = 'Set up your account, then complete your medical intake.';
+      submit.textContent = 'Create account';
+      toggle.textContent = 'Sign in';
+      toggleText.textContent = 'Already have an account?';
+      form.setAttribute('data-pnrx-auth', 'register');
+      document.getElementById('auth-pw').setAttribute('autocomplete', 'new-password');
+    } else {
+      title.textContent = 'Sign in to your account';
+      sub.textContent   = 'Enter your credentials to continue.';
+      submit.textContent = 'Sign in';
+      toggle.textContent = 'Create an account';
+      toggleText.textContent = 'New to Pep Nation Rx?';
+      form.setAttribute('data-pnrx-auth', 'signin');
+      document.getElementById('auth-pw').setAttribute('autocomplete', 'current-password');
+    }
+    if (errSlot) { errSlot.hidden = true; errSlot.textContent = ''; }
+  }
+  toggle.addEventListener('click', function (e) {
+    e.preventDefault();
+    setMode(card.dataset.mode === 'signin' ? 'register' : 'signin');
+  });
+  // honour ?mode=register
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('mode') === 'register') setMode('register');
+
+  // if backend is reachable and session is alive, fast-forward to dashboard
+  if (window.pnrx && window.pnrx.api && window.pnrx.api.detectBackend) {
+    window.pnrx.api.detectBackend().then(function (ok) {
+      if (!ok) return;
+      window.pnrx.api.get('/api/auth/me').then(function () {
+        window.location.replace('dashboard.html');
+      }).catch(function () { /* not logged in — stay */ });
+    });
+  }
+});
+</script>
 </body>
 </html>

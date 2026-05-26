@@ -32,8 +32,8 @@
       <a href="index.html#how">How it works</a>
     </nav>
     <div class="site-header__right">
-      <a class="site-header__signin" href="index.html">Sign out</a>
-      <span class="site-av" style="background:linear-gradient(145deg,#0891B2,#0E5C6E)" aria-hidden="true">JM</span>
+      <a class="site-header__signin" href="index.html" id="dash-signout">Sign out</a>
+      <span class="site-av" style="background:linear-gradient(145deg,#0891B2,#0E5C6E)" aria-hidden="true" data-pnrx-avatar>JM</span>
     </div>
   </div>
 </header>
@@ -45,10 +45,10 @@
     <div class="pnrx-container site-dash-hero__row">
       <div>
         <div class="pnrx-eyebrow" style="color:var(--pnrx-color-secondary)">Your account</div>
-        <h1 style="margin-top:8px">Welcome back, Jordan</h1>
-        <p>Your treatment is active and on track. Next refill ships automatically.</p>
+        <h1 style="margin-top:8px" data-pnrx-welcome>Welcome back, Jordan</h1>
+        <p data-pnrx-welcome-sub>Your treatment is active and on track. Next refill ships automatically.</p>
       </div>
-      <a class="pnrx-btn pnrx-btn--primary" href="browse.html">Add a treatment</a>
+      <a class="pnrx-btn pnrx-btn--primary" href="intake.html">Add a treatment</a>
     </div>
   </section>
 
@@ -57,7 +57,7 @@
       <div class="site-dash__grid">
 
         <!-- MAIN COLUMN -->
-        <div class="pnrx-stack">
+        <div class="pnrx-stack" data-pnrx-main>
           <!-- active plan -->
           <div class="pnrx-card">
             <div class="site-dash__cardhead">
@@ -185,6 +185,124 @@
   </div>
 </footer>
 
+<script src="api.js" defer></script>
 <script src="app.js" defer></script>
+<script defer>
+/* dashboard.html — when the backend is reachable:
+   * confirm session via /api/auth/me; redirect to /signin if not logged in.
+   * load /api/orders/me and replace the mocked plan/orders block with REAL
+     data. Empty state if there are no orders yet.
+   * wire the Sign-out link to POST /api/auth/logout
+   If the backend is NOT reachable, the page keeps its existing mock content
+   exactly as on pepnationrx.com today.
+*/
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.pnrx || !window.pnrx.api) return;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+  function fmtDate(iso) {
+    if (!iso) return '';
+    try { return new Date(iso).toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' }); }
+    catch (e) { return iso; }
+  }
+  function stateLabel(s) {
+    return ({
+      DRAFT:'Draft', INTAKE_SUBMITTED:'Awaiting clinician review',
+      CLINICIAN_REVIEW:'Under review', APPROVED:'Approved — scheduling',
+      DECLINED:'Declined', ROUTED_TO_PHARMACY:'Sent to pharmacy',
+      COMPOUNDING:'Compounding', SHIPPED:'Shipped', DELIVERED:'Delivered',
+      CANCELLED:'Cancelled', ON_HOLD:'On hold',
+    })[s] || s;
+  }
+
+  function renderEmpty(main) {
+    main.innerHTML =
+      '<div class="pnrx-card">'+
+      '<div class="site-dash__cardhead"><h2>You don’t have any treatments yet</h2></div>'+
+      '<p class="pnrx-muted" style="font-size:15px">Once you complete an intake and a clinician reviews it, your active plan and orders will appear here.</p>'+
+      '<div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">'+
+      '<a class="pnrx-btn pnrx-btn--primary" href="intake.html">Start a visit</a>'+
+      '<a class="pnrx-btn pnrx-btn--ghost" href="browse.html">Browse treatments</a>'+
+      '</div></div>';
+  }
+
+  function renderOrders(main, orders) {
+    var html = '';
+    orders.forEach(function (o, i) {
+      var prod = (o.productIds && o.productIds[0]) || 'Treatment plan';
+      var prog = o.program ? (' · ' + esc(o.program)) : '';
+      html +=
+        '<div class="pnrx-card">'+
+          '<div class="site-dash__cardhead">'+
+            '<h2>'+ (i===0 ? 'Latest order' : 'Order') +'</h2>'+
+            '<span class="pnrx-badge pnrx-badge--soft">'+ esc(stateLabel(o.state)) +'</span>'+
+          '</div>'+
+          '<div class="site-order">'+
+            '<span class="site-order__dot" style="background:var(--pnrx-color-primary)"></span>'+
+            '<div class="site-order__main"><b>'+ esc(prod) +'</b><span>Order #'+ esc(o.orderId.slice(0,8)) + prog +' · submitted '+ esc(fmtDate(o.createdAt)) +'</span></div>'+
+            '<span class="site-order__status">'+ esc(stateLabel(o.state)) +'</span>'+
+          '</div>'+
+          (o.needsPmCapture
+            ? '<p class="pnrx-muted" style="margin-top:10px;font-size:14px">Payment method capture is pending (dev mode — no Stripe key configured).</p>'
+            : '') +
+        '</div>';
+    });
+    main.innerHTML = html;
+  }
+
+  function wireSignout() {
+    var btn = document.getElementById('dash-signout');
+    if (!btn) return;
+    btn.addEventListener('click', function (e) {
+      e.preventDefault();
+      window.pnrx.api.post('/api/auth/logout', {}).catch(function(){}).then(function () {
+        window.location.href = 'index.html';
+      });
+    });
+  }
+
+  window.pnrx.api.detectBackend().then(function (ok) {
+    if (!ok) return; // stay on the mock
+    Promise.all([
+      window.pnrx.api.get('/api/auth/me'),
+      window.pnrx.api.get('/api/orders/me'),
+    ]).then(function (results) {
+      var me     = results[0];
+      var orders = (results[1] && results[1].orders) || [];
+      var welcome = document.querySelector('[data-pnrx-welcome]');
+      if (welcome && me && me.patient) {
+        var fn = me.patient.firstName || (me.patient.email || '').split('@')[0];
+        welcome.textContent = 'Welcome back, ' + (fn || 'patient');
+      }
+      var sub = document.querySelector('[data-pnrx-welcome-sub]');
+      if (sub) {
+        sub.textContent = orders.length
+          ? 'Your treatment plan, refills and care-team messages are below.'
+          : 'You haven’t started a treatment yet — start your medical intake to begin.';
+      }
+      var av = document.querySelector('[data-pnrx-avatar]');
+      if (av && me && me.patient) {
+        var src = (me.patient.firstName ? me.patient.firstName[0] : '') +
+                  (me.patient.lastName  ? me.patient.lastName[0]  : '');
+        if (!src) src = (me.patient.email || 'U').slice(0,2).toUpperCase();
+        av.textContent = src.toUpperCase();
+      }
+      var main = document.querySelector('[data-pnrx-main]');
+      if (main) {
+        if (orders.length === 0) renderEmpty(main); else renderOrders(main, orders);
+      }
+      wireSignout();
+    }).catch(function (err) {
+      if (err && err.status === 401) {
+        window.location.replace('signin.html');
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>

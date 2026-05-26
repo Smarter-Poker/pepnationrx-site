@@ -253,6 +253,58 @@
         return;
       }
       var submit = form.querySelector('[type="submit"]');
+
+      // -- Live auth path -------------------------------------------------
+      // When the form opts in via data-pnrx-auth AND the backend is up we
+      // talk to the real API. Otherwise we fall back to the original mock
+      // animation so the live static site (where no backend is reachable)
+      // keeps its current behavior.
+      var mode = form.getAttribute('data-pnrx-auth'); // "signin" | "register"
+      var live = window.pnrx && window.pnrx.api && window.pnrx.backend === true;
+      if (mode && live) {
+        var email = (form.querySelector('input[type="email"]') || {}).value;
+        var pw = (form.querySelector('input[type="password"]') || {}).value;
+        if (submit) {
+          submit.classList.add('pnrx-btn--loading');
+          submit.disabled = true;
+        }
+        var p;
+        if (mode === 'register') {
+          p = window.pnrx.api.post('/api/auth/register', { email: email, password: pw })
+            // After register we auto-login so the patient can complete intake.
+            .then(function () {
+              return window.pnrx.api.post('/api/auth/login', { email: email, password: pw });
+            });
+        } else {
+          p = window.pnrx.api.post('/api/auth/login', { email: email, password: pw });
+        }
+        p.then(function () {
+          toast({ type: 'success',
+            title: mode === 'register' ? 'Account created' : 'Signed in',
+            message: mode === 'register'
+              ? 'Taking you to your medical intake…'
+              : 'Taking you to your dashboard…' });
+          setTimeout(function () {
+            window.location.href = (mode === 'register') ? 'intake.html' : 'dashboard.html';
+          }, 500);
+        }).catch(function (err) {
+          if (submit) {
+            submit.classList.remove('pnrx-btn--loading');
+            submit.disabled = false;
+          }
+          var errSlot = form.querySelector('[data-pnrx-auth-error]');
+          if (errSlot) {
+            errSlot.textContent = err.message || 'Something went wrong. Please try again.';
+            errSlot.hidden = false;
+          }
+          toast({ type: 'error',
+            title: mode === 'register' ? 'Couldn’t create account' : 'Couldn’t sign in',
+            message: err.message || 'Please check your details and try again.' });
+        });
+        return;
+      }
+
+      // -- Mock fallback (unchanged) --------------------------------------
       if (submit) {
         submit.classList.add('pnrx-btn--loading');
         submit.disabled = true;
@@ -265,4 +317,9 @@
       }
     });
   });
+
+  /* ---- backend detection (best-effort, fire-and-forget) ----------------- */
+  if (window.pnrx && window.pnrx.api && window.pnrx.api.detectBackend) {
+    window.pnrx.api.detectBackend();
+  }
 })();

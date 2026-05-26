@@ -533,48 +533,183 @@
     window.scrollTo({ top: root.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
   }
 
-  /* Render the final success / confirmation state. */
-  function renderSuccess() {
+  /* Render the final success / confirmation state.
+     opts.cardSaved   - card was captured via SetupIntent
+     opts.deferredPm  - intake accepted but card capture deferred (dev mode)
+     opts.note        - optional extra message
+     opts.order       - order summary (provides id link to the dashboard)
+  */
+  function renderSuccess(opts) {
+    opts = opts || {};
     root.innerHTML = '';
     var panel = el('div', 'site-panel site-panel--success');
+    var detail = opts.cardSaved
+      ? 'Your card is on file but <strong>has not been charged</strong>. You\'ll only be billed if a licensed clinician approves your treatment.'
+      : (opts.deferredPm
+          ? 'You\'ll receive a secure link to add a payment method before any treatment is dispensed.'
+          : '');
+    var emailLine = answers.email
+      ? 'We\'ll email you at <strong>' + esc(answers.email) + '</strong> as soon as your visit has been reviewed.'
+      : 'We\'ll email you as soon as your visit has been reviewed.';
     panel.innerHTML =
       '<div class="site-success__icon">' +
         '<svg aria-hidden="true" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13l6 6L22 5"/></svg>' +
       '</div>' +
       '<h3 class="pnrx-h3" style="margin-top:14px;font-size:22px">Your intake has been submitted</h3>' +
-      '<p class="pnrx-muted" style="margin-top:8px">Thank you. Your responses are now queued for review by an independent, licensed clinician. We’ll email you at <strong>' +
-        esc(answers.email || 'your email') + '</strong> as soon as your visit has been reviewed — usually within one business day.</p>';
+      '<p class="pnrx-muted" style="margin-top:8px">' + emailLine +
+        (detail ? ' ' + detail : '') +
+        (opts.note ? '<br><br>' + esc(opts.note) : '') +
+      '</p>';
     var foot = el('div', 'site-intake-foot');
     foot.style.justifyContent = 'flex-start';
-    var home = el('a', 'pnrx-btn pnrx-btn--primary', 'Back to home');
+    var dash = el('a', 'pnrx-btn pnrx-btn--primary', 'Go to your dashboard');
+    dash.href = 'dashboard.html';
+    foot.appendChild(dash);
+    var home = el('a', 'pnrx-btn pnrx-btn--ghost', 'Back to home');
     home.href = 'index.html';
+    home.style.marginLeft = '10px';
     foot.appendChild(home);
     panel.appendChild(foot);
     root.appendChild(panel);
     window.scrollTo({ top: root.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
   }
 
+  /* ---- product-id heuristic --------------------------------------------
+     The backend requires productIds in the catalog. We map the program
+     answer to a known good id; a clinician can change the prescribed plan
+     later. Fallback to a known-good id keeps the call valid even if the
+     program key is unset.                                              */
+  function deriveProductIds() {
+    var prog = answers.program || context.program || null;
+    var map = {
+      weight_management: ['glp1-semaglutide'],
+      sexual_health:     ['pep-pt141'],
+      trt:               ['hrm-sermorelin'],
+      peptide:           ['pep-bpc157'],
+      longevity:         ['pep-bpc157'],
+    };
+    return map[prog] || ['glp1-semaglutide'];
+  }
+
   /* Submit the collected answers. Graceful: endpoint may not be live. */
   function submitIntake(btn) {
+    var program = answers.program || context.program || null;
     var payload = {
-      program: answers.program || context.program || null,
+      program: program,
+      productIds: deriveProductIds(),
       answers: answers,
+      patient: {
+        firstName: answers.first_name || answers.firstName || null,
+        lastName:  answers.last_name  || answers.lastName  || null,
+        email:     answers.email || null,
+        dateOfBirth: answers.date_of_birth || answers.dob || null,
+      },
       questionnaireVersion: Q.version,
     };
     btn.classList.add('pnrx-btn--loading');
     btn.disabled = true;
-    fetch('/api/intake', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    }).then(function (res) {
-      if (!res.ok) throw new Error('bad status');
-      return res.json();
-    }).then(function () {
-      renderSuccess();
+
+    var post = (window.pnrx && window.pnrx.api)
+      ? window.pnrx.api.post('/api/intake', payload)
+      : fetch('/api/intake', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          credentials:'include', body: JSON.stringify(payload),
+        }).then(function (r) { if (!r.ok) throw new Error('bad status'); return r.json(); });
+
+    post.then(function (data) {
+      btn.classList.remove('pnrx-btn--loading');
+      btn.disabled = false;
+      if (!data) return renderSuccess();
+      if (data.eligible === false) {
+        renderIneligible(data.redFlags || []);
+        return;
+      }
+      // Pay step only when we got back a SetupIntent client_secret AND a
+      // usable publishable key. Otherwise fall through to "needs PM capture
+      // deferred" (dev-mode-no-stripe-key path) and just show success.
+      var pay = data.payment;
+      if (pay && pay.setupIntentClientSecret && pay.stripePublishableKey) {
+        renderPaymentStep(data, pay);
+      } else {
+        renderSuccess({ deferredPm: true, order: data.order });
+      }
     }).catch(function () {
+      btn.classList.remove('pnrx-btn--loading');
+      btn.disabled = false;
       // Endpoint not live yet — show the confirmation state anyway.
       renderSuccess();
+    });
+  }
+
+  /* Render the Stripe Elements card-capture step. NO charge is made — this
+     is a SetupIntent confirmation that saves a card for the future. */
+  function renderPaymentStep(intakeResp, pay) {
+    if (typeof window.Stripe !== 'function') {
+      renderSuccess({ deferredPm: true, order: intakeResp.order,
+        note: 'Card capture is unavailable in this browser. A member of our team will reach out to set up your payment method.' });
+      return;
+    }
+    var stripe = window.Stripe(pay.stripePublishableKey);
+    var elements = stripe.elements();
+    var card = elements.create('card', { hidePostalCode: false });
+
+    root.innerHTML = '';
+    var header = el('div', 'pnrx-section-header pnrx-section-header--center');
+    header.style.marginBottom = '26px';
+    header.innerHTML =
+      '<div class="pnrx-eyebrow">Final step — Payment on approval</div>' +
+      '<h2 class="pnrx-h2">Save a card for after clinician approval</h2>';
+    root.appendChild(header);
+
+    var panel = el('div', 'site-panel');
+    panel.innerHTML =
+      '<p class="pnrx-muted" style="font-size:15px">We save your card now but <strong>do not charge it</strong>. You\'ll only be billed if a licensed clinician approves your treatment.</p>' +
+      '<div id="pnrx-card-element" style="margin-top:18px;padding:14px;border:1px solid var(--pnrx-color-border);border-radius:var(--pnrx-radius-md);background:var(--pnrx-color-surface)"></div>' +
+      '<div id="pnrx-card-error" role="alert" class="pnrx-field__error" style="margin-top:10px;display:block" hidden></div>';
+    root.appendChild(panel);
+
+    var foot = el('div', 'site-intake-foot');
+    var back = el('button', 'pnrx-btn pnrx-btn--ghost', 'Back');
+    back.type = 'button';
+    back.addEventListener('click', function () { renderStep(); });
+    var save = el('button', 'pnrx-btn pnrx-btn--primary', 'Save card & finish');
+    save.type = 'button';
+    foot.appendChild(back);
+    foot.appendChild(save);
+    panel.appendChild(foot);
+
+    card.mount('#pnrx-card-element');
+    var errBox = document.getElementById('pnrx-card-error');
+    card.on('change', function (ev) {
+      if (ev.error) { errBox.textContent = ev.error.message; errBox.hidden = false; }
+      else { errBox.textContent = ''; errBox.hidden = true; }
+    });
+
+    save.addEventListener('click', function () {
+      save.classList.add('pnrx-btn--loading');
+      save.disabled = true;
+      stripe.confirmCardSetup(pay.setupIntentClientSecret, {
+        payment_method: { card: card },
+      }).then(function (res) {
+        if (res.error) {
+          errBox.textContent = res.error.message || 'Could not save card.';
+          errBox.hidden = false;
+          save.classList.remove('pnrx-btn--loading');
+          save.disabled = false;
+          return;
+        }
+        var pmId = res.setupIntent && res.setupIntent.payment_method;
+        var orderId = intakeResp.order && intakeResp.order.orderId;
+        var done = (window.pnrx && window.pnrx.api && orderId && pmId)
+          ? window.pnrx.api.post('/api/billing/payment-method', { orderId: orderId, paymentMethodId: pmId }).catch(function(){})
+          : Promise.resolve();
+        done.then(function () { renderSuccess({ order: intakeResp.order, cardSaved: true }); });
+      }).catch(function (err) {
+        errBox.textContent = (err && err.message) || 'Could not save card.';
+        errBox.hidden = false;
+        save.classList.remove('pnrx-btn--loading');
+        save.disabled = false;
+      });
     });
   }
 
