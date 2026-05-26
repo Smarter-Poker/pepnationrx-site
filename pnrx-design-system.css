@@ -20,8 +20,10 @@
   /* -- primitive color ramp -- */
   --pnrx-cyan-700:#0E5C6E;  --pnrx-cyan-600:#0891B2;  --pnrx-cyan-400:#22D3EE;
   --pnrx-cyan-50:#ECFEFF;
-  --pnrx-green-700:#047857; --pnrx-green-600:#059669; --pnrx-green-500:#06B47C;
-  --pnrx-green-50:#DEF6EC;
+  /* legacy --pnrx-green-* names retained as compatibility aliases — values
+     remapped to brand teal/cyan. Green is NOT part of the brand palette. */
+  --pnrx-green-700:#0E5C6E; --pnrx-green-600:#0891B2; --pnrx-green-500:#22D3EE;
+  --pnrx-green-50:#ECFEFF;
   --pnrx-ink-900:#0F2A33;   --pnrx-ink-600:#456069;   --pnrx-ink-400:#7B939B;
   --pnrx-paper:#FFFFFF;     --pnrx-bg:#F4FBFC;        --pnrx-line:#DCEBEE;
   --pnrx-amber-700:#8A5A12; --pnrx-amber-50:#FBF6EF;  --pnrx-amber-line:#ECDCC0;
@@ -31,8 +33,12 @@
   --pnrx-color-primary:var(--pnrx-cyan-600);
   --pnrx-color-primary-deep:var(--pnrx-cyan-700);
   --pnrx-color-secondary:var(--pnrx-cyan-400);
-  --pnrx-color-accent:var(--pnrx-green-600);
-  --pnrx-color-accent-deep:var(--pnrx-green-700);
+  /* "accent" is a legacy semantic alias once tied to green; the brand has no
+     green, so it now resolves to the brand's primary teal. */
+  --pnrx-color-accent:var(--pnrx-cyan-600);
+  --pnrx-color-accent-deep:var(--pnrx-cyan-700);
+  --pnrx-color-success:var(--pnrx-cyan-700);
+  --pnrx-color-success-soft:var(--pnrx-cyan-50);
   --pnrx-color-on-primary:#FFFFFF;
   --pnrx-color-on-accent:#FFFFFF;
   --pnrx-color-fg:var(--pnrx-ink-900);          /* primary text  */
@@ -212,11 +218,11 @@
 .pnrx-btn:focus-visible{outline:none;box-shadow:var(--pnrx-focus-ring)}
 .pnrx-btn:active{transform:scale(.97)}
 .pnrx-btn--primary{
-  background:linear-gradient(145deg,var(--pnrx-green-500),var(--pnrx-color-accent-deep));
+  background:linear-gradient(145deg,var(--pnrx-color-secondary),var(--pnrx-color-primary-deep));
   color:var(--pnrx-color-on-accent);
-  box-shadow:0 6px 16px -5px rgba(5,150,105,.6);
+  box-shadow:0 6px 16px -5px rgba(8,145,178,.6);
 }
-.pnrx-btn--primary:hover{transform:translateY(-2px);box-shadow:0 12px 24px -8px rgba(5,150,105,.7)}
+.pnrx-btn--primary:hover{transform:translateY(-2px);box-shadow:0 12px 24px -8px rgba(8,145,178,.7)}
 .pnrx-btn--secondary{
   background:var(--pnrx-color-surface);color:var(--pnrx-color-primary-deep);
   box-shadow:inset 0 0 0 1.5px var(--pnrx-color-border);
@@ -309,7 +315,9 @@
   font-size:11.5px;padding:5px 11px;border-radius:var(--pnrx-radius-pill);
 }
 .pnrx-chip--cyan{background:var(--pnrx-color-surface-tint);color:var(--pnrx-color-primary-deep)}
-.pnrx-chip--green{background:var(--pnrx-green-50);color:var(--pnrx-color-accent-deep)}
+/* legacy `--green` chip name retained for backward compatibility — visually it
+   is now cyan/teal. Brand has no green. */
+.pnrx-chip--green{background:var(--pnrx-color-surface-tint);color:var(--pnrx-color-primary-deep)}
 
 /* ---------------------------------------------------------------------------
    9. SEGMENTED CONTROL  (replaces the Browse filter native buttons)

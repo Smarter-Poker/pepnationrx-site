@@ -8,5 +8,5 @@
   </defs>
   <rect width="64" height="64" rx="16" fill="url(#pnrx)"/>
   <path d="M22 16h13.5c7.7 0 12.5 4.6 12.5 11.6 0 7-4.8 11.7-12.5 11.7H30v9.7H22V16zm8 16.7h4.8c3.3 0 5.2-1.8 5.2-5s-1.9-5-5.2-5H30v10z" fill="#FFFFFF"/>
-  <circle cx="44" cy="44" r="6.5" fill="#06B47C" stroke="#FFFFFF" stroke-width="2.5"/>
+  <circle cx="44" cy="44" r="6.5" fill="#22D3EE" stroke="#FFFFFF" stroke-width="2.5"/>
 </svg>
