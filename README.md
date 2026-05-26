@@ -1,38 +1,47 @@
-# Pep Nation Rx — Website
+# ARCHIVED -- This repository is superseded
 
-Redesigned, production-ready telehealth marketing site. Static HTML/CSS/JS,
-no build step, built on the `pnrx` design system.
+**This repository is superseded by
+[`Smarter-Software-PIQ/pepnationrx`](https://github.com/Smarter-Software-PIQ/pepnationrx)
+(private).**
 
-## Pages
-`index.html` · `browse.html` · `product.html` · `intake.html` ·
-`signin.html` · `dashboard.html` · `404.html`
+All canonical PepNationRX work has been migrated to the new monorepo as of
+**2026-05-26**. This repo remains as historical reference and will receive
+**no further updates**. The live site at <https://pepnationrx.com> is
+served from the new monorepo via Vercel.
 
-## Assets
-- `pnrx-design-system.css` — design tokens + component library
-- `app.css` — page layout (header, footer, hero, per-page composition)
-- `app.js` — progressive enhancement (nav, filters, selection state)
-- `favicon.svg` — brand mark
-- `vercel.json` — clean-URL config · `.vercelignore` — excludes screenshots
+## What was migrated
 
-## Deploy
+The high-value, design-agnostic content from this repo was ported into
+the new monorepo via a feature branch PR:
 
-This is a zero-config static site. To publish:
+- 13-step intake questionnaire (data + evaluator + validator)
+- Product catalog (23 SKUs across 5 categories, with pharmacy routing)
+- Cookie consent banner + preferences modal (vanilla JS)
+- Legal-document structural index + counsel-placeholder inventory
+- Pharmacy routing rule, Stripe charge-on-approval spec, SteadyMD payload
+  spec, Order state machine
 
-### Option A — Vercel (recommended, ~60 seconds)
-1. Go to https://vercel.com/new
-2. Import this repository (`Smarter-Poker/pepnationrx-site`)
-3. Click **Deploy** — Vercel auto-detects the static site and `vercel.json`
+The Cowork build's UI styling (`pnrx-design-system.css`, `app.css`,
+`app.js`, 27 hand-authored HTML pages) was **not** migrated; the new
+monorepo uses a different aesthetic (futuristic-metal black/neon) and a
+different runtime (Web Components vs plain HTML).
 
-Every later push to `main` then auto-deploys.
+## What was in this repo
 
-### Option B — Vercel CLI
-```
-npx vercel deploy --prod
-```
-Run from the repo root; it prompts for a one-time login.
+Static HTML/CSS/JS marketing site for PepNationRX, built on the `pnrx`
+design system. Pages: `index.html`, `browse.html`, `product.html`,
+`intake.html`, `signin.html`, `dashboard.html`, `404.html`, plus 22
+product pages and 7 legal documents (Terms, Privacy, Legal Notices,
+Telehealth Consent, HIPAA Notice of Privacy Practices, Consumer Health
+Data Privacy / MHMDA, Do Not Sell or Share).
 
-## Notes
-- All seven pages are render-verified: design tokens resolve, no JS errors,
-  no horizontal overflow on desktop or mobile.
-- Sign-in and intake forms are front-end only — wire them to your backend
-  before production use.
+## Original README
+
+The original README content from this repo is preserved in this commit's
+history. See the [diff for this commit](../../commits/main) on the main
+branch, or browse the file at any earlier commit on the branch.
+
+---
+
+For all current development, go to
+<https://github.com/Smarter-Software-PIQ/pepnationrx>.
